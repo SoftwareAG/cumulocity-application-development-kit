@@ -4,12 +4,15 @@
   "description": "Global Presales command line",
   "main": "index.js",
   "bin": {
-    "gps" : "index.js"
+    "gps": "index.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^16.2.0"
+  }
 }
