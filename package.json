@@ -1,0 +1,15 @@
+{
+  "name": "gps",
+  "version": "1.0.0",
+  "description": "Global Presales command line",
+  "main": "index.js",
+  "bin": {
+    "gps" : "index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
