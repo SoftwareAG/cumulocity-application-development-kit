@@ -5,10 +5,11 @@ module.exports = {
     mode: 'production',
     devtool: 'source-map',
     entry: {
-        [require('./cumulocity.json').contextPath]: './dist/bundle-src/custom-widget.js'
+        [require('./widget-cumulocity.json').contextPath]: './dist/bundle-src/custom-widget.js'
     },
     resolve: {
         alias: {
+            "~assets": path.resolve(__dirname, 'assets'),
             "~styles": path.resolve(__dirname, 'styles')
         }
     },
@@ -26,7 +27,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 8192,
-                    publicPath: `/apps/${require('./cumulocity').contextPath}/`
+                    publicPath: `/apps/${require('./widget-cumulocity').contextPath}/`
                 },
             }
         ]
@@ -38,17 +39,15 @@ module.exports = {
     },
     plugins: [
         new URLImportPlugin ({
-            manifestName: require('./cumulocity').contextPath,
+            manifestName: require('./widget-cumulocity').contextPath,
             fileName: "importManifest.js",
             basePath: '',
-            publicPath: `/apps/${require('./cumulocity').contextPath}/`,
+            publicPath: `/apps/${require('./widget-cumulocity').contextPath}/`,
             useExternals: {
                 "@angular/animations": "AngularAnimations",
                 "@angular/common": "AngularCommon",
-                "@angular/common/http": "AngularCommonHttp",
                 "@angular/core": "AngularCore",
                 "@angular/forms": "AngularForms",
-                "@angular/http": "AngularHttp",
                 "@angular/platform-browser": "AngularPlatformBrowser",
                 "@angular/platform-browser/animations": "AngularPlatformBrowserAnimations",
                 "@angular/router": "AngularRouter",

@@ -1,0 +1,13 @@
+{
+  "name": "__NAME__",
+  "contextPath": "__DASHEDNAME__-widget",
+  "key": "__DASHEDNAME__-widget-application-key",
+  "contentSecurityPolicy": "default-src 'self'",
+  "description": "__NAME__",
+  "icon": {
+    "class": "fa fw fa-sun-o"
+  },
+  "manifest": {
+    "noAppSwitcher": true
+  }
+}

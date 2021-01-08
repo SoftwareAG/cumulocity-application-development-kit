@@ -13,9 +13,16 @@ function clean() {
 }
 
 const compile = series(
-    function buildAngularLibrary() { return ngPackagr.build({project: './ng-package.json'}) },
+    function buildAngularLibrary() { return ngPackagr.build({project: 'ng-package.json'}) },
     function separateWebpackBuildSrc() { return fs.copy('./dist/widget-library/fesm5', './dist/bundle-src') },
-    function replaceStylePath() {
+    function replaceAssetsPath() {
+        return src('./dist/widget-library/**/*')
+            .pipe(replace(/~assets/g, function () {
+                return path.relative(this.file.dirname, './dist/widget-library/assets').replace(/\\/g, '/')
+            }))
+            .pipe(dest('./dist/widget-library/'))
+    },
+    function replaceStylesPath() {
         return src('./dist/widget-library/**/*')
             .pipe(replace(/~styles/g, function () {
                 return path.relative(this.file.dirname, './dist/widget-library/styles').replace(/\\/g, '/')
@@ -27,12 +34,12 @@ const compile = series(
 
 const bundle = series(
     async function webpackBuild() { return execSync("npx webpack", {stdio: 'inherit'}) },
-    function copyCumulocityJson() { return fs.copy('./cumulocity.json', './dist/widget/cumulocity.json')},
+    function copyCumulocityJson() { return fs.copy('./widget-cumulocity.json', './dist/widget/cumulocity.json')},
     function createZip() {
         return src('./dist/widget/**/*')
             // Filter out the webpackRuntime chunk, we only need the widget code chunks
             .pipe(filter(file => !/^[a-f0-9]{20}\.js(\.map)?$/.test(file.relative)))
-            .pipe(zip('widget.zip'))
+            .pipe(zip('__DASHEDNAME__-widget_v1.0.1.zip'))
             .pipe(dest('dist/'))
     }
 )
@@ -42,7 +49,7 @@ exports.build = compile;
 exports.bundle = bundle;
 exports.default = series(clean, compile, bundle, async function success() {
     console.log("Build Finished Successfully!");
-    console.log("Runtime Widget Output (Install in the browser): dist/widget.zip");
+    console.log("Runtime Widget Output (Install in the browser): dist/__DASHEDNAME__-widget_v1.0.1.zip");
     const pkgJson = require('./dist/widget-library/package.json');
     console.log(`Widget Angular Library (Install with: "npm i <filename.tgz>"): dist/${pkgJson.name}-${pkgJson.version}.tgz`);
 });

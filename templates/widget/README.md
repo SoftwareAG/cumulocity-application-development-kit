@@ -1,68 +1,40 @@
-# Cumulocity IoT Runtime Widget Template
-Template widget for runtime loading in Cumulocity IoT using the [Cumulocity IoT Runtime Widget Loader](https://github.com/SoftwareAG/cumulocity-runtime-widget-loader) (written by Software AG Global Presales)
+﻿# __NAME__ widget 
 
-##  Building a Widget
-1. Clone this repo: 
-```
-git clone https://github.com/SoftwareAG/cumulocity-runtime-widget.git
-```
-2. Install the dependencies:
-```
-cd cumulocity-runtime-widget
-npm install
-```
-3. Copy your widget's code into the src folder (or a subfolder).
-4. Reference your widget's Angular module in the public_api.ts (Comment out or delete the DemoWidgetModule)
-```typescript
-/* Add your widget's module(s) here */
 
-// export {DemoWidgetModule} from "./demo-widget/demo-widget.module";
-export {YourWidgetModule} from "./your-widget/your-widget.module";
-```
-5. Pick a **unique** contextPath for your widget, eg:
-```
-my-widget
-```
-6. Edit the **name** and **interleave** values in the package.json to include the new contextPath:<br>
-**Important:** Leave the `-CustomWidget` on the interleave option, and don't edit the `dist/bundle-src/custom-widget.js` part
-```json
-{
-  "name": "my-widget",
-  "interleave": {
-    "dist\\bundle-src\\custom-widget.js": "my-widget-CustomWidget",
-    "dist/bundle-src/custom-widget.js": "my-widget-CustomWidget"
-  },
-}
-```
+![__NAME__ Widget](styles/previewimage.png)
 
-7. Edit the **contextPath** and **applicationKey** values in the cumulocity.json file to include the contextPath (Feel free to edit the name and icon):
-```json
-{
-  "name": "My Widget",
-  "contextPath": "my-widget",
-  "key": "my-widget-application-key",
-  "contentSecurityPolicy": "default-src 'self'",
-  "icon": {
-    "class": "fa fa-puzzle-piece"
-  },
-  "manifest": {
-    "noAppSwitcher": true
-  }
-}
-```
-8. Build the widget:
-```
-npm run build
-```
-9. After the build completes the `/dist` folder will contain a `widget.zip` file, this is your deployable widget
+## Features
 
-## Deploying a Widget
-See the documentation for the [Cumulocity IoT Runtime Widget Loader](https://github.com/SoftwareAG/cumulocity-runtime-widget-loader)
+
+## Installation
+
+### Runtime Widget Deployment?
+
+* This widget supports runtime deployment. Download the [Runtime Binary](https://github.com/SoftwareAG/cumulocity-weather-forecast-widget/releases/download/1.0.1/weather-forecast-widget_v1.0.1.zip) and follow runtime deployment instructions from [here](https://github.com/SoftwareAG/cumulocity-runtime-widget-loader).
+
+## Quickstart
+This guide will teach you how to add the widget in your existing or new dashboard.
+
+### Configuration options
+
+### Development - to enhance and test this widget in your local environment
+1. Clone the repository on your local machine using `git clone <ADD REPO URL>`.
+2. Run `npm install` to download the module dependencies.
+3. Run `c8ycli server -u https://your_tenant_url` to start the server.
+4. Go to `http://localhost:9000/apps/cockpit/` in the browser to view and test your changes.
+5. (Optional) push the changes back to this repository.
+
+### Build - to create a new build of the __NAME__ widget for the Runtime Widget Loader
+1. Finish the development and testing on your local machine.
+2. Run `gulp` to start the build process.
+3. Use the `__DASHEDNAME__-widget.zip` file in the `dist` folder as your distribution file.
 
 ------------------------------
 
-These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
+This widget is provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
 _____________________
 For more information you can Ask a Question in the [TECHcommunity Forums](http://tech.forums.softwareag.com/techjforum/forums/list.page?product=cumulocity).
 
 You can find additional information in the [Software AG TECHcommunity](http://techcommunity.softwareag.com/home/-/product/name/cumulocity).
+
+
