@@ -20,21 +20,17 @@ import { ControlContainer, NgForm } from "@angular/forms";
 import * as _ from 'lodash';
 
 @Component({
-    selector: 'weather-forecast-widget-config-component',
-    templateUrl: './weather-forecast-widget.config.component.html',
+    selector: '__DASHEDNAME__-widget-config-component',
+    templateUrl: './__DASHEDNAME__-widget.config.component.html',
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
 })
 
-export class WeatherForecastWidgetConfig implements OnInit {
+export class __CLASSNAME__WidgetConfig implements OnInit {
 
     @Input() config: any = {};
 
-    weatherAPIConfig = {
-        apikey: '',
-        latitude: '',
-        longitude: '',
-        city: '',
-        period: ''
+    __CLASSNAME__Config = {
+        __CLASSNAME__Value: ''
     };
 
     ngOnInit(): void {
@@ -46,14 +42,14 @@ export class WeatherForecastWidgetConfig implements OnInit {
             return;
         }
 
-        if (_.has(this.config, 'weatherAPIConfig')) {
-            this.weatherAPIConfig = _.get(this.config, 'weatherAPIConfig');
+        if (_.has(this.config, "__CLASSNAME__Config")) {
+            this.__CLASSNAME__Config = _.get(this.config, "__CLASSNAME__Config");
         }}
 
     onConfigChanged($event: Event): void {
-        if (!this.weatherAPIConfig.apikey ) {
+        if (!this.__CLASSNAME__Config.__CLASSNAME__Value) {
             return;
         }
-        _.set(this.config, 'weatherAPIConfig', { ...this.weatherAPIConfig });
+        _.set(this.config, "__CLASSNAME__Config", { ...this.__CLASSNAME__Config });
     }
 }

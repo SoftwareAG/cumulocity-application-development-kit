@@ -1,9 +1,9 @@
 {
-  "name": "__NAME__",
+  "name": "__CLASSNAME__",
   "contextPath": "__DASHEDNAME__-widget",
   "key": "__DASHEDNAME__-widget-application-key",
   "contentSecurityPolicy": "default-src 'self'",
-  "description": "__NAME__",
+  "description": "__CLASSNAME__",
   "icon": {
     "class": "fa fw fa-sun-o"
   },

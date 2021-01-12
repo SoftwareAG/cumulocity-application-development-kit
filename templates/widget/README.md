@@ -1,7 +1,7 @@
-﻿# __NAME__ widget 
+﻿# __CLASSNAME__ widget 
 
 
-![__NAME__ Widget](styles/previewimage.png)
+![__CLASSNAME__ Widget](styles/previewimage.png)
 
 ## Features
 
@@ -10,7 +10,7 @@
 
 ### Runtime Widget Deployment?
 
-* This widget supports runtime deployment. Download the [Runtime Binary](https://github.com/SoftwareAG/cumulocity-weather-forecast-widget/releases/download/1.0.1/weather-forecast-widget_v1.0.1.zip) and follow runtime deployment instructions from [here](https://github.com/SoftwareAG/cumulocity-runtime-widget-loader).
+* This widget supports runtime deployment. Download the [Runtime Binary](https://github.com/SoftwareAG/cumulocity-__DASHEDNAME__-widget/releases/download/1.0.1/__DASHEDNAME__-widget_v1.0.1.zip) and follow runtime deployment instructions from [here](https://github.com/SoftwareAG/cumulocity-runtime-widget-loader).
 
 ## Quickstart
 This guide will teach you how to add the widget in your existing or new dashboard.
@@ -24,7 +24,7 @@ This guide will teach you how to add the widget in your existing or new dashboar
 4. Go to `http://localhost:9000/apps/cockpit/` in the browser to view and test your changes.
 5. (Optional) push the changes back to this repository.
 
-### Build - to create a new build of the __NAME__ widget for the Runtime Widget Loader
+### Build - to create a new build of the __CLASSNAME__ widget for the Runtime Widget Loader
 1. Finish the development and testing on your local machine.
 2. Run `gulp` to start the build process.
 3. Use the `__DASHEDNAME__-widget.zip` file in the `dist` folder as your distribution file.

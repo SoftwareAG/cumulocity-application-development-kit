@@ -16,8 +16,8 @@
 * limitations under the License.
  */
 import { CoreModule, HOOK_COMPONENTS } from "@c8y/ngx-components";
-import { WeatherForecastWidgetConfig } from "./weather-forecast-widget.config.component";
-import { WeatherForecastWidget } from "./weather-forecast-widget.component";
+import { __CLASSNAME__WidgetConfig } from "./__DASHEDNAME__-widget.config.component";
+import { __CLASSNAME__Widget } from "./__DASHEDNAME__-widget.component";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
@@ -26,19 +26,19 @@ import { HttpClientModule } from "@angular/common/http";
         CoreModule,
         HttpClientModule
     ],
-    declarations: [WeatherForecastWidget, WeatherForecastWidgetConfig],
-    entryComponents: [WeatherForecastWidget, WeatherForecastWidgetConfig],
+    declarations: [__CLASSNAME__Widget, __CLASSNAME__WidgetConfig],
+    entryComponents: [__CLASSNAME__Widget, __CLASSNAME__WidgetConfig],
     providers: [{
         provide: HOOK_COMPONENTS,
         multi: true,
         useValue: {
-            id: 'global.presales.weather.forecast.widget',
-            label: 'Weather Forecast',
-            description: 'Provides a 5-day weather forecast using OpenWeatherAPI',
-            component: WeatherForecastWidget,
-            configComponent: WeatherForecastWidgetConfig,
+            id: 'global.presales.__DOTTEDNAME__.widget',
+            label: '__CLASSNAME__',
+            description: 'Description of __CLASSNAME__ widget',
+            component: __CLASSNAME__Widget,
+            configComponent: __CLASSNAME__WidgetConfig,
             previewImage: require("~styles/previewImage.png")
         }
     }],
 })
-export class WeatherForecastWidgetModule {}
+export class __CLASSNAME__WidgetModule {}

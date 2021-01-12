@@ -1,11 +1,11 @@
 {
-  "name": "weather-forecast-widget",
+  "name": "__DASHEDNAME__-widget",
   "interleave": {
-    "dist\\bundle-src\\custom-widget.js": "weather-forecast-widget-CustomWidget",
-    "dist/bundle-src/custom-widget.js": "weather-forecast-widget-CustomWidget"
+    "dist\\bundle-src\\custom-widget.js": "__DASHEDNAME__-widget-CustomWidget",
+    "dist/bundle-src/custom-widget.js": "__DASHEDNAME__-widget-CustomWidget"
   },
   "version": "1.0.1",
-  "description": "Provides a 5-day weather forecast using OpenWeatherAPI (written by Software AG Global Presales)",
+  "description": "Description of __CLASSNAME__ (written by Software AG Global Presales)",
   "main": "index.js",
   "scripts": {
     "start": "c8ycli server",

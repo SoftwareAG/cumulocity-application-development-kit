@@ -13,8 +13,8 @@ import { AssetsNavigatorModule } from '@c8y/ngx-components/assets-navigator';
 import { CockpitDashboardModule } from '@c8y/ngx-components/context-dashboard';
 import { ReportsModule } from '@c8y/ngx-components/reports';
 import { SensorPhoneModule } from '@c8y/ngx-components/sensor-phone';
-import {__NAME__Widget} from "./src/weather-forecast-widget/weather-forecast-widget.component";
-import {__NAME__WidgetConfig} from "./src/weather-forecast-widget/weather-forecast-widget.config.component";
+import {__CLASSNAME__Widget} from "./src/__DASHEDNAME__-widget/__DASHEDNAME__-widget.component";
+import {__CLASSNAME__WidgetConfig} from "./src/__DASHEDNAME__-widget/__DASHEDNAME__-widget.config.component";
 
 @NgModule({
   imports: [
@@ -29,18 +29,18 @@ import {__NAME__WidgetConfig} from "./src/weather-forecast-widget/weather-foreca
     SensorPhoneModule,
     UpgradeModule
   ],
-  declarations: [__NAME__Widget, __NAME__WidgetConfig],
-  entryComponents: [__NAME__Widget, __NAME__WidgetConfig],
+  declarations: [__CLASSNAME__Widget, __CLASSNAME__WidgetConfig],
+  entryComponents: [__CLASSNAME__Widget, __CLASSNAME__WidgetConfig],
   providers: [{
     provide: HOOK_COMPONENTS,
     multi: true,
     useValue: [
       {
-        id: 'global.presales.__NAME__.widget',
-        label: '__NAME__',
-        description: '__NAME__',
-        component: __NAME__Widget,
-        configComponent: __NAME__WidgetConfig,
+        id: 'global.presales.__CLASSNAME__.widget',
+        label: '__CLASSNAME__',
+        description: '__CLASSNAME__',
+        component: __CLASSNAME__Widget,
+        configComponent: __CLASSNAME__WidgetConfig,
         previewImage: require("./styles/previewImage.png")
       }
     ]

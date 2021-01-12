@@ -15,4 +15,4 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
  */
-export { WeatherForecastWidgetModule } from "./__DASHEDNAME__-widget/__DASHEDNAME__-widget.module";
+export { __CLASSNAME__WidgetModule } from "./__DASHEDNAME__-widget/__DASHEDNAME__-widget.module";
