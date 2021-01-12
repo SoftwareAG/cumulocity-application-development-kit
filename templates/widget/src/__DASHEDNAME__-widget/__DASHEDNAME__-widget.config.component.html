@@ -7,12 +7,11 @@
     </c8y-form-group>
 
     <c8y-form-group>
-        <label for="__CLASSNAME__-__CLASSNAME__Value">
-            __CLASSNAME__ Value
+        <label for="__CLASSNAME__-myValue">
+            Simple Value
         </label>
-        <input type="text" name="__CLASSNAME__Config-__CLASSNAME__Value" id="__CLASSNAME__-__CLASSNAME__Value"
-            class="form-control bar-chart-control" (change)="onConfigChanged($event)"
-            [(ngModel)]="__CLASSNAME__Config.__CLASSNAME__Value" placeholder='__CLASSNAME__ Value' />
+        <input type="text" name="__CLASSNAME__-myValue" id="__CLASSNAME__-myValue" class="form-control bar-chart-control"
+            (change)="onConfigChanged($event)" [(ngModel)]="config.myValue" placeholder='val' />
     </c8y-form-group>
 
 </ng-form>

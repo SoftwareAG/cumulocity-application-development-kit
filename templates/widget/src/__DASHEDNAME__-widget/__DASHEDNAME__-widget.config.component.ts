@@ -17,39 +17,19 @@
  */
 import { Component, Input, OnInit } from "@angular/core";
 import { ControlContainer, NgForm } from "@angular/forms";
-import * as _ from 'lodash';
 
 @Component({
-    selector: '__DASHEDNAME__-widget-config-component',
-    templateUrl: './__DASHEDNAME__-widget.config.component.html',
-    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }]
+    selector: "__DASHEDNAME__-widget-config-component",
+    templateUrl: "./__DASHEDNAME__-widget.config.component.html",
+    viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
-
 export class __CLASSNAME__WidgetConfig implements OnInit {
+    ngOnInit(): void {}
 
     @Input() config: any = {};
 
-    __CLASSNAME__Config = {
-        __CLASSNAME__Value: ''
-    };
-
-    ngOnInit(): void {
-        this.initConfig();
-    }
-
-    private initConfig(): void {
-        if (!this.config) {
-            return;
-        }
-
-        if (_.has(this.config, "__CLASSNAME__Config")) {
-            this.__CLASSNAME__Config = _.get(this.config, "__CLASSNAME__Config");
-        }}
-
     onConfigChanged($event: Event): void {
-        if (!this.__CLASSNAME__Config.__CLASSNAME__Value) {
-            return;
-        }
-        _.set(this.config, "__CLASSNAME__Config", { ...this.__CLASSNAME__Config });
+        console.log("CONFIG-CHANGED");
+        console.log(this.config);
     }
 }
