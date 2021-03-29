@@ -5,11 +5,11 @@ var copy = require('recursive-copy');
 var rif = require('replace-in-file');
 
 async function createWidget(args) {
-    console.log(args)
+    console.log(args);
 
     // EXPECT widget name in kebab/dotted/or "separated in some way" 
     // form a.b.c <=> d_e-f <=> g h i   , single identifiers will work if required
-    
+
     let camelTest = /^[a-z]+(?:[A-Z][a-z]+)*$/;
     let pascalTest = /^[A-Z][a-z]+(?:[A-Z][a-z]+)*$/;
     let className = args.name;
@@ -18,7 +18,7 @@ async function createWidget(args) {
 
     // if the name is Pascal fine, if not is it camel, if not convert
     // finally if camel upper the first char to make Pascal
-    if (!pascalTest.test(className)){
+    if (!pascalTest.test(className)) {
         if (!camelTest.test(args.name)) {
             className = mc.toCamelCase(args.name); //remove any separators and format nicely
             className = className.charAt(0).toUpperCase() + className.slice(1); //ensure PascalCase for class names etc...        
@@ -46,7 +46,7 @@ async function createWidget(args) {
     console.log("__DASHEDNAME__ => " + dashedName); // filenames and css classnames
     console.log("__DOTTEDNAME__ => " + dottedName); // namespaces and config ids
 
-    // Use the above to generate the files fo rthe new widget
+    // Use the above to generate the files for the new widget
     // args contains the type of thing we are using (the template dir)
     // This options structure allows us to rename and replace internal 
     // refs to the various names with the correct values from above
@@ -55,9 +55,9 @@ async function createWidget(args) {
         dot: true,
         junk: false,
         rename: function (filePath) {
-            let newName = filePath.replace(/\_\_DASHEDNAME\_\_/g, dashedName)
-            newName = newName.replace(/\_\_DOTTEDNAME\_\_/g, dottedName)
-            newName = newName.replace(/\_\_CLASSNAME\_\_/g, className)
+            let newName = filePath.replace(/\_\_DASHEDNAME\_\_/g, dashedName);
+            newName = newName.replace(/\_\_DOTTEDNAME\_\_/g, dottedName);
+            newName = newName.replace(/\_\_CLASSNAME\_\_/g, className);
             return newName;
         }
     };
@@ -75,15 +75,15 @@ async function createWidget(args) {
     };
 
     try {
-        const copyres = await copy(path.join(__dirname, '..', 'templates', args.type), process.cwd(), options)
+        const copyres = await copy(path.join(__dirname, '..', 'templates', args.type), process.cwd(), options);
         console.info('Copied ' + copyres.length + ' files');
-        await rif(rifopts)
+        await rif(rifopts);
         rifopts.from = /\_\_DOTTEDNAME\_\_/g;
         rifopts.to = dottedName;
-        await rif(rifopts)
+        await rif(rifopts);
         rifopts.from = /\_\_DASHEDNAME\_\_/g;
         rifopts.to = dashedName;
-        await rif(rifopts)        
+        await rif(rifopts);
     }
     catch (error) {
         console.error('Error occurred:', error);

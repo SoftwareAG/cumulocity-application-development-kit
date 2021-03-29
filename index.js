@@ -4,8 +4,8 @@
 const fs = require('fs');
 const path = require('path');
 
-const createWidget = require('./commands/create-widget')
-const addCommand = require('./commands/add-command')
+const createWidget = require('./commands/create-widget');
+const addCommand = require('./commands/add-command');
 const yargs = require('yargs');
 
 // dynamic way to add new templates 
@@ -16,7 +16,7 @@ const TEMPLATES = fs.readdirSync(path.join(__dirname, 'templates'));
 // manner - pass that to a handler defined in the command sub dir
 //
 yargs
-    .scriptName('gps')
+    .scriptName('gps-cli')
     //create the component skeleton
     .command({
         command: 'create [type] [name]',
@@ -49,6 +49,6 @@ yargs
                 demand: true,
                 array: true,
             },
-        },        
-    }).parse(process.argv.slice(2)) //ignore the first two args
+        },
+    }).parse(process.argv.slice(2)); //ignore the first two args
 
