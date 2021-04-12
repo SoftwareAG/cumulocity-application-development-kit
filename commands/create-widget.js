@@ -198,17 +198,18 @@ async function createWidget(args) {
         // I don't care about efficiency just the final result... 
         // so multiple passes required for replace contents
         //Now update replacements in the destination files 
+        let destination = path.join(process.cwd(), 'projects', `${dashedName}-widget`, 'src', 'lib');
         const rifOpts = {
             files: [
-                '*',
-                '**'
+                `${destination}/*`,
+                `${destination}/**`
             ],
             from: /\_\_CLASSNAME\_\_/g,
             to: className,
         };
 
         try {
-            const copyRes = await copy(path.join(__dirname, '..', 'templates', args.type), path.join(process.cwd(), 'projects', `${dottedName}-widget`, 'src', 'lib'), options);
+            const copyRes = await copy(path.join(__dirname, '..', 'templates', args.type), destination, options);
             console.info('Copied ' + copyRes.length + ' files');
             await rif(rifOpts);
             rifOpts.from = /\_\_DOTTEDNAME\_\_/g;
