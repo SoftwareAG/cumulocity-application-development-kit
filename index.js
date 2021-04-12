@@ -28,8 +28,14 @@ yargs
                 demand: true,
                 choices: TEMPLATES,
             },
+            project: {
+                demand: true,
+            },
             name: {
                 demand: true,
+            },
+            tenant: {
+                demand: false,
             },
         },
     })
