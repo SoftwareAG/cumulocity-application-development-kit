@@ -1,0 +1,26 @@
+{
+  "name": "gps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaribouJohn/gps.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CaribouJohn/gps/issues"
+  },
+  "homepage": "https://github.com/CaribouJohn/gps#readme",
+  "dependencies": {
+    "@schematics/angular": "^11.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.37"
+  }
+}
