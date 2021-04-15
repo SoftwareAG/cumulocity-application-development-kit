@@ -39,7 +39,7 @@ import { HttpClientModule } from "@angular/common/http";
                 description: "Description of __CLASSNAME__ widget",
                 component: __CLASSNAME__Widget,
                 configComponent: __CLASSNAME__WidgetConfig,
-                //previewImage: require("~styles/previewImage.png"),
+                previewImage: require("~styles/previewImage.png"),
                 data: {
                     ng1: {
                         options: { noDeviceTarget: false, noNewWidgets: false, deviceTargetNotRequired: false, groupsSelectable: true },

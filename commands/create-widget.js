@@ -72,10 +72,18 @@ async function createWidget(args) {
 
     console.log("modifying package.json");
     const packageJSON = JSON.parse(fs.readFileSync("package.json"));
-    packageJSON.scripts["c8y"]["application"]["name"] = "cockpit";
-    packageJSON.scripts["c8y"]["application"]["contextPath"] = "cockpit";
-    packageJSON.scripts["c8y"]["application"]["contextPath"] = "cockpit-application-key";
-    // packageJSON.scripts["buildMinor"] = `"cd projects/${dashedName}-widget && npm version minor && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
+    packageJSON.c8y.application.name = '"cockpit"';
+    packageJSON.c8y.application.contextPath = '"cockpit"';
+    packageJSON.c8y.application.key = '"cockpit-application-key"';
+    // "tabsHorizontal": true,
+    //     "upgrade": true,
+    //         "rightDrawer": true,
+    //             "breadcrumbs": false,
+    //                 "sensorAppOneLink": "http://onelink.to/pca6qe",
+    //                     "sensorPhone": true,
+    //                         "contentSecurityPolicy": "base-uri 'none'; default-src 'self' 'unsafe-inline' http: https: ws: wss:; connect-src 'self' *.billwerk.com http: https: ws: wss:;  script-src 'self' open.mapquestapi.com *.twitter.com *.twimg.com 'unsafe-inline' 'unsafe-eval' data:; style-src * 'unsafe-inline' blob:; img-src * data:; font-src * data:; frame-src *;";
+
+    packageJSON.scripts.buildRuntime = `gulp`;
     // packageJSON.scripts["buildMajor"] = `"cd projects/${dashedName}-widget && npm version major && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
     // packageJSON.scripts["serve"] = `"ng build ${dashedName}-widget && npm i dist/${dashedName}-widget && ng s"`;
     fs.writeFileSync("package.json", JSON.stringify(packageJSON, null, 4));
@@ -185,6 +193,18 @@ async function createWidget(args) {
             rifOpts.from = /\_\_DASHEDNAME\_\_/g;
             rifOpts.to = dashedName;
             await rif(rifOpts);
+            console.log(`npm install base (local) ${args.project}`);
+            command = `npm install`;
+            child = spawn(command, { encoding: 'utf8', shell: true });
+            for await (const data of child.stdout) {
+                console.log(`${data}`);
+            };
+            console.log(`npm adding dev dependencies (local) for ${args.project}`);
+            command = `npm install --save-dev gulp-cli gulp  webpack webpack-cli webpack-dev-middleware webpack-external-import url-loader css-loader gulp-bump gulp-filter gulp-replace gulp-zip ng-packagr`;
+            child = spawn(command, { encoding: 'utf8', shell: true });
+            for await (const data of child.stdout) {
+                console.log(`${data}`);
+            };
         }
         catch (error) {
             console.error('Error occurred:', error);
