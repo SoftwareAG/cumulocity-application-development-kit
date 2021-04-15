@@ -70,13 +70,6 @@ async function createWidget(args) {
     console.log("__DASHEDNAME__ => " + dashedName); // filenames and css classnames
     console.log("__DOTTEDNAME__ => " + dottedName); // namespaces and config ids
 
-    // console.log("Create widget library");
-    // command = `ng generate library ${dashedName}-widget`;
-    // child = spawn(command, { encoding: 'utf8', shell: true });
-    // for await (const data of child.stdout) {
-    //     console.log(`${data}`);
-    // };
-
     console.log("modifying package.json");
     const packageJSON = JSON.parse(fs.readFileSync("package.json"));
     packageJSON.scripts["c8y"]["application"]["name"] = "cockpit";
