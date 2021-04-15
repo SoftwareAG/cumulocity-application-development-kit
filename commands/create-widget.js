@@ -20,7 +20,8 @@ async function createWidget(args) {
 
     //ng new Project-Name
     //cd Project - Name;
-    let command = `ng new --skip-tests ${args.project}`;
+    console.log(`Creating ${args.project}`);
+    let command = `c8ycli new ${args.project} cockpit -a @c8y/apps@latest `;
     let child = spawn(command, { encoding: 'utf8', shell: true });
     for await (const data of child.stdout) {
         console.log(`${data}`);
@@ -29,14 +30,6 @@ async function createWidget(args) {
 
     console.log("Changing to project directory");
     process.chdir(args.project);
-
-    console.log("Installing c8y libs");
-    command = `npm install @c8y/client@latest  @c8y/ngx-components@latest`;
-    child = spawn(command, { encoding: 'utf8', shell: true });
-    for await (const data of child.stdout) {
-        console.log(`${data}`);
-    };
-
 
     // EXPECT widget name in kebab/dotted/or "separated in some way"
     // form a.b.c <=> d_e-f <=> g h i   , single identifiers will work if required
@@ -77,38 +70,40 @@ async function createWidget(args) {
     console.log("__DASHEDNAME__ => " + dashedName); // filenames and css classnames
     console.log("__DOTTEDNAME__ => " + dottedName); // namespaces and config ids
 
-    console.log("Create widget library");
-    command = `ng generate library ${dashedName}-widget`;
-    child = spawn(command, { encoding: 'utf8', shell: true });
-    for await (const data of child.stdout) {
-        console.log(`${data}`);
-    };
+    // console.log("Create widget library");
+    // command = `ng generate library ${dashedName}-widget`;
+    // child = spawn(command, { encoding: 'utf8', shell: true });
+    // for await (const data of child.stdout) {
+    //     console.log(`${data}`);
+    // };
 
     console.log("modifying package.json");
     const packageJSON = JSON.parse(fs.readFileSync("package.json"));
-    packageJSON.scripts["buildPatch"] = `"cd projects/${dashedName}-widget && npm version patch && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
-    packageJSON.scripts["buildMinor"] = `"cd projects/${dashedName}-widget && npm version minor && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
-    packageJSON.scripts["buildMajor"] = `"cd projects/${dashedName}-widget && npm version major && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
-    packageJSON.scripts["serve"] = `"ng build ${dashedName}-widget && npm i dist/${dashedName}-widget && ng s"`;
+    packageJSON.scripts["c8y"]["application"]["name"] = "cockpit";
+    packageJSON.scripts["c8y"]["application"]["contextPath"] = "cockpit";
+    packageJSON.scripts["c8y"]["application"]["contextPath"] = "cockpit-application-key";
+    // packageJSON.scripts["buildMinor"] = `"cd projects/${dashedName}-widget && npm version minor && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
+    // packageJSON.scripts["buildMajor"] = `"cd projects/${dashedName}-widget && npm version major && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
+    // packageJSON.scripts["serve"] = `"ng build ${dashedName}-widget && npm i dist/${dashedName}-widget && ng s"`;
     fs.writeFileSync("package.json", JSON.stringify(packageJSON, null, 4));
 
-    console.log("creating proxy-conf.json");
-    let tenant = args.tenant ? args.tenant : "http://your-tenant.cumulocity.com";
-    const proxyJSON = {
-        "/": {
-            "target": tenant,
-            "secure": false,
-            "changeOrigin": true,
-            "logLevel": "info"
-        }
-    };
-    fs.writeFileSync("proxy-conf.json", JSON.stringify(proxyJSON, null, 4));
+    // console.log("creating proxy-conf.json");
+    // let tenant = args.tenant ? args.tenant : "http://your-tenant.cumulocity.com";
+    // const proxyJSON = {
+    //     "/": {
+    //         "target": tenant,
+    //         "secure": false,
+    //         "changeOrigin": true,
+    //         "logLevel": "info"
+    //     }
+    // };
+    // fs.writeFileSync("proxy-conf.json", JSON.stringify(proxyJSON, null, 4));
 
 
-    console.log("Adding proxy to angular.json");
-    const angularJSON = JSON.parse(fs.readFileSync("angular.json"));
-    angularJSON.projects[`${args.project}`].architect.serve["proxyConfig"] = "src/proxy.conf.json";
-    fs.writeFileSync("angular.json", JSON.stringify(angularJSON, null, 4));
+    // console.log("Adding proxy to angular.json");
+    // const angularJSON = JSON.parse(fs.readFileSync("angular.json"));
+    // angularJSON.projects[`${args.project}`].architect.serve["proxyConfig"] = "src/proxy.conf.json";
+    // fs.writeFileSync("angular.json", JSON.stringify(angularJSON, null, 4));
 
 
 
@@ -117,65 +112,44 @@ async function createWidget(args) {
     //Now update replacements in the destination files 
     const fetchOpts = {
         files: [
-            `src/app/app.module.ts`
+            `app.module.ts`
         ],
-        from: /import\ \{\ AppComponent\ \}\ from\ \'\.\/app\.component\'\;/g,
-        to: `import { ${className}WidgetModule } from './../../projects/${dashedName}-widget/src/lib/${dashedName}-widget.module';
-            import { AppComponent } from './app.component';
-             import { Client, BasicAuth } from '@c8y/client';
-             const auth = new BasicAuth({
-                user: 'demo@democenter.com',
-                password: '#####',
-                tenant: 't00001'
-             });
-             const client = new Client(auth, 'http://localhost:4200');
-             client.setAuth(auth);
-             const fetchClient = client.core;`,
+        from: /import\ \{\ CoreModule/g,
+        to: `import { ${className}Widget } from './src/${dashedName}/${dashedName}-widget.component'
+        import { ${className}WidgetConfig } from './src/${dashedName}/${dashedName}-widget.config.component'
+        import { CoreModule, HOOK_COMPONENTS`,
     };
 
     await rif(fetchOpts);
-    fetchOpts.from = /providers\:\ \[\]\,/g;
-    fetchOpts.to = `providers: [
-        {
-        provide: InventoryService,
-        useFactory: () => {
-            return new InventoryService(fetchClient);
-            }
-        }]`;
+
+    fetchOpts.from = /imports\:\ \[/g;
+    fetchOpts.to = `  declarations: [${className}Widget, ${className}WidgetConfig],      // 1.
+        entryComponents: [${className}Widget, ${className}WidgetConfig],
+        providers: [{
+            provide: HOOK_COMPONENTS,                         // 2.
+            multi: true,
+            useValue: [
+                {
+                    id: 'global.presales.${dottedName}.widget',
+                    label: '${className} Widget',
+                    description: '${className} Widget',
+                    //previewImage: preview.previewImage,
+                    component: ${className}Widget,
+                    configComponent: ${className}WidgetConfig,
+                    data : {
+                        ng1 : {
+                            options: { noDeviceTarget: false,
+                            noNewWidgets: false,
+                            deviceTargetNotRequired: false,
+                            groupsSelectable: true
+                            },
+                        }
+                    }
+                }
+            ]
+        }],
+        imports: [`;
     await rif(fetchOpts);
-
-    // fetchOpts.files = [`projects/${dashedName}-widget/src/lib/${dashedName}-widget.module.ts`];
-    // fetchOpts.from = /widget\.component\'\;/g;
-    // fetchOpts.to = `widget.component';
-    //     import { CoreModule, HOOK_COMPONENTS } from '@c8y/ngx-components';`;
-    // await rif(fetchOpts);
-
-    // fetchOpts.from = /imports\:\ \[/g;
-    // fetchOpts.to = `providers: [
-    //     {
-    //         provide:  HOOK_COMPONENTS,
-    //         multi: true,
-    //         useValue: {
-    //             id: '${dottedName}.widget',
-    //             label: '${className} Widget',
-    //             description: '${className} Widget',
-    //             //previewImage: preview.previewImage,
-    //             component: ${className}WidgetComponent,
-    //             configComponent: ${className}WidgetConfig,
-    //             data : {
-    //                 ng1 : {
-    //                     options: { noDeviceTarget: false,
-    //                     noNewWidgets: false,
-    //                     deviceTargetNotRequired: false,
-    //                     groupsSelectable: true
-    //                     },
-    //                 }
-    //             }
-    //         }
-    //     }]  imports: [`;
-    // await rif(fetchOpts);
-
-    fs.writeFileSync("src/app/app.component.html", `<lib-${dashedName}-widget></lib-${dashedName}-widget>`);
 
     doThis = true;
     if (doThis) {
@@ -198,11 +172,11 @@ async function createWidget(args) {
         // I don't care about efficiency just the final result... 
         // so multiple passes required for replace contents
         //Now update replacements in the destination files 
-        let destination = path.join(process.cwd(), 'projects', `${dashedName}-widget`, 'src', 'lib');
+        let destination = process.cwd();
         const rifOpts = {
             files: [
-                `${destination}/*`,
-                `${destination}/**`
+                `*`,
+                `**`
             ],
             from: /\_\_CLASSNAME\_\_/g,
             to: className,
