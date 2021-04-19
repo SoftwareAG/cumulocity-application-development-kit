@@ -9,19 +9,23 @@ async function createWidget(args) {
     console.log(args);
     // Create the workspace if it doesn't already exist. 
     if (fs.existsSync('angular.json')) {
-        print("You are already in an Angular project this command will create the whole project");
+        console.log("You are already in an Angular project this command will create the whole project");
         return;
     }
 
     if (fs.existsSync(`${args.project}`)) {
-        print(`Cannot create project, ${args.project} already exists`);
+        console.log(`Cannot create project, ${args.project} already exists`);
         return;
     }
 
+    let cumulocity_version = args.ver ? `apps@${args.ver}` : "apps@latest";
+
+    console.log(`Using Cumulocity version ${cumulocity_version}`);
+
     //ng new Project-Name
     //cd Project - Name;
-    console.log(`Creating ${args.project}`);
-    let command = `c8ycli new ${args.project} cockpit -a @c8y/apps@latest `;
+    let command = `c8ycli new ${args.project} cockpit -a @c8y/${cumulocity_version} `;
+    console.log(`Creating ${args.project} - ${command}`);
     let child = spawn(command, { encoding: 'utf8', shell: true });
     for await (const data of child.stdout) {
         console.log(`${data}`);
@@ -72,9 +76,9 @@ async function createWidget(args) {
 
     console.log("modifying package.json");
     const packageJSON = JSON.parse(fs.readFileSync("package.json"));
-    packageJSON.c8y.application.name = '"cockpit"';
-    packageJSON.c8y.application.contextPath = '"cockpit"';
-    packageJSON.c8y.application.key = '"cockpit-application-key"';
+    packageJSON.c8y.application.name = 'cockpit';
+    packageJSON.c8y.application.contextPath = 'cockpit';
+    packageJSON.c8y.application.key = 'cockpit-application-key';
     // "tabsHorizontal": true,
     //     "upgrade": true,
     //         "rightDrawer": true,
@@ -116,8 +120,8 @@ async function createWidget(args) {
             `app.module.ts`
         ],
         from: /import\ \{\ CoreModule/g,
-        to: `import { ${className}Widget } from './src/${dashedName}/${dashedName}-widget.component'
-        import { ${className}WidgetConfig } from './src/${dashedName}/${dashedName}-widget.config.component'
+        to: `import { ${className}Widget } from './src/${dashedName}-widget/${dashedName}-widget.component'
+        import { ${className}WidgetConfig } from './src/${dashedName}-widget/${dashedName}-widget.config.component'
         import { CoreModule, HOOK_COMPONENTS`,
     };
 
@@ -199,8 +203,18 @@ async function createWidget(args) {
             for await (const data of child.stdout) {
                 console.log(`${data}`);
             };
-            console.log(`npm adding dev dependencies (local) for ${args.project}`);
-            command = `npm install --save-dev gulp-cli gulp  webpack webpack-cli webpack-dev-middleware webpack-external-import url-loader css-loader gulp-bump gulp-filter gulp-replace gulp-zip ng-packagr`;
+
+
+            console.log(`npm install base (local/runtime) ${args.project}/runtime`);
+            process.chdir('runtime');
+            command = `npm install`;
+            child = spawn(command, { encoding: 'utf8', shell: true });
+            for await (const data of child.stdout) {
+                console.log(`${data}`);
+            };
+            //need for theruntime widget build not for the general dev
+            console.log(`npm adding dev dependencies (local/runtime) for ${args.project}`);
+            command = `npm install --save-dev @c8y/apps@${cumulocity_version}`;
             child = spawn(command, { encoding: 'utf8', shell: true });
             for await (const data of child.stdout) {
                 console.log(`${data}`);

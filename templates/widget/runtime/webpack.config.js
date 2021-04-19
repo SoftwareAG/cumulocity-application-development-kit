@@ -5,11 +5,12 @@ module.exports = {
     mode: 'production',
     devtool: 'source-map',
     entry: {
-        [require('./widget-cumulocity.json').contextPath]: './dist/bundle-src/custom-widget.js'
+        [require('./cumulocity.json').contextPath]: './dist/bundle-src/custom-widget.js'
     },
     resolve: {
         alias: {
-            "~styles": path.resolve(__dirname, 'styles')
+            "~styles": path.resolve(__dirname, '..', 'styles'),
+            "~assets": path.resolve(__dirname, '..', 'assets')
         }
     },
     module: {
@@ -26,7 +27,7 @@ module.exports = {
                 loader: 'url-loader',
                 options: {
                     limit: 8192,
-                    publicPath: `/apps/${require('./widget-cumulocity').contextPath}/`
+                    publicPath: `/apps/${require('./cumulocity').contextPath}/`
                 },
             }
         ]
@@ -38,10 +39,10 @@ module.exports = {
     },
     plugins: [
         new URLImportPlugin({
-            manifestName: require('./widget-cumulocity').contextPath,
+            manifestName: require('./cumulocity').contextPath,
             fileName: "importManifest.js",
             basePath: '',
-            publicPath: `/apps/${require('./widget-cumulocity').contextPath}/`,
+            publicPath: `/apps/${require('./cumulocity').contextPath}/`,
             useExternals: {
                 "@angular/animations": "AngularAnimations",
                 "@angular/common": "AngularCommon",

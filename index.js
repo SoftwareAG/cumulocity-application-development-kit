@@ -37,6 +37,9 @@ yargs
             tenant: {
                 demand: false,
             },
+            ver: {
+                demand: false,
+            },
         },
     })
     //add elements to the widget

@@ -19,4 +19,4 @@
  * @format
  */
 
-export { __CLASSNAME__WidgetModule } from "./__DASHEDNAME__/__DASHEDNAME__-widget.module";
+export { __CLASSNAME__WidgetModule } from "./__DASHEDNAME__-widget/__DASHEDNAME__-widget.module";

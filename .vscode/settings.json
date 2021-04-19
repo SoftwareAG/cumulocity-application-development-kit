@@ -21,5 +21,8 @@
             "command": "extension.execute",
             "priority": 4
         }
-    ]
+    ],
+    "files.associations": {
+        "*.yaml": "home-assistant"
+    }
 }

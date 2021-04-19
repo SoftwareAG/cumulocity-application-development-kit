@@ -31,7 +31,7 @@ const compile = series(
             .pipe(dest('./'));
     },
     function buildAngularLibrary() { return ngPackagr.build({ project: './ng-package.json' }); },
-    function separateWebpackBuildSrc() { return fs.copy('./dist/widget-library/fesm2015', './dist/bundle-src'); },
+    function separateWebpackBuildSrc() { return fs.copy('./dist/widget-library/fesm5', './dist/bundle-src'); },
     function replaceStylePath() {
         return src('./dist/widget-library/**/*')
             .pipe(replace(/~styles/g, function () {
@@ -44,7 +44,7 @@ const compile = series(
 
 const compileNoBump = series(
     function buildAngularLibrary() { return ngPackagr.build({ project: './ng-package.json' }); },
-    function separateWebpackBuildSrc() { return fs.copy('./dist/widget-library/fesm2015', './dist/bundle-src'); },
+    function separateWebpackBuildSrc() { return fs.copy('./dist/widget-library/fesm5', './dist/bundle-src'); },
     function replaceStylePath() {
         return src('./dist/widget-library/**/*')
             .pipe(replace(/~styles/g, function () {
@@ -60,7 +60,7 @@ const compileNoBump = series(
  */
 const bundle = series(
     async function webpackBuild() { return execSync("npx webpack", { stdio: 'inherit' }); },
-    function copyCumulocityJson() { return fs.copy('./widget-cumulocity.json', './dist/widget/cumulocity.json'); },
+    function copyCumulocityJson() { return fs.copy('./cumulocity.json', './dist/widget/cumulocity.json'); },
     function createZip() {
         const pkgJson = require('./dist/widget-library/package.json');//need bumped version.
         return src('./dist/widget/**/*')
@@ -73,7 +73,7 @@ const bundle = series(
 
 const bundleRelease = series(
     async function webpackBuild() { return execSync("npx webpack", { stdio: 'inherit' }); },
-    function copyCumulocityJson() { return fs.copy('./widget-cumulocity.json', './dist/widget/cumulocity.json'); },
+    function copyCumulocityJson() { return fs.copy('./cumulocity.json', './dist/widget/cumulocity.json'); },
     function createZip() {
         const pkgJson = require('./dist/widget-library/package.json');//need bumped version.
         return src('./dist/widget/**/*')
