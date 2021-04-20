@@ -9,7 +9,7 @@ async function createWidget(args) {
     console.log(args);
     // Create the workspace if it doesn't already exist. 
     if (fs.existsSync('angular.json')) {
-        console.log("You are already in an Angular project this command will create the whole project");
+        console.log("You are in an Angular project this command should be run in an empty directory.");
         return;
     }
 
@@ -87,7 +87,7 @@ async function createWidget(args) {
     //                     "sensorPhone": true,
     //                         "contentSecurityPolicy": "base-uri 'none'; default-src 'self' 'unsafe-inline' http: https: ws: wss:; connect-src 'self' *.billwerk.com http: https: ws: wss:;  script-src 'self' open.mapquestapi.com *.twitter.com *.twimg.com 'unsafe-inline' 'unsafe-eval' data:; style-src * 'unsafe-inline' blob:; img-src * data:; font-src * data:; frame-src *;";
 
-    packageJSON.scripts.buildRuntime = `gulp`;
+    //packageJSON.scripts.buildRuntime = `gulp`;
     // packageJSON.scripts["buildMajor"] = `"cd projects/${dashedName}-widget && npm version major && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
     // packageJSON.scripts["serve"] = `"ng build ${dashedName}-widget && npm i dist/${dashedName}-widget && ng s"`;
     fs.writeFileSync("package.json", JSON.stringify(packageJSON, null, 4));
@@ -214,7 +214,7 @@ async function createWidget(args) {
             };
             //need for theruntime widget build not for the general dev
             console.log(`npm adding dev dependencies (local/runtime) for ${args.project}`);
-            command = `npm install --save-dev @c8y/apps@${cumulocity_version}`;
+            command = `npm install --save-dev @c8y/ngx-components@${cumulocity_version}`;
             child = spawn(command, { encoding: 'utf8', shell: true });
             for await (const data of child.stdout) {
                 console.log(`${data}`);
