@@ -13,8 +13,8 @@ async function createWidget(args) {
         return;
     }
 
-    if (fs.existsSync(`${args.project}`)) {
-        console.log(`Cannot create project, ${args.project} already exists`);
+    if (fs.existsSync(`${args.name}`)) {
+        console.log(`Cannot create project, ${args.name} already exists`);
         return;
     }
 
@@ -24,8 +24,8 @@ async function createWidget(args) {
 
     //ng new Project-Name
     //cd Project - Name;
-    let command = `c8ycli new ${args.project} cockpit -a @c8y/${cumulocity_version} `;
-    console.log(`Creating ${args.project} - ${command}`);
+    let command = `npx @c8y/cli new ${args.name} cockpit -a @c8y/${cumulocity_version} `;
+    console.log(`Creating ${args.name} - ${command}`);
     let child = spawn(command, { encoding: 'utf8', shell: true });
     for await (const data of child.stdout) {
         console.log(`${data}`);
@@ -33,7 +33,7 @@ async function createWidget(args) {
 
 
     console.log("Changing to project directory");
-    process.chdir(args.project);
+    process.chdir(args.name);
 
     // EXPECT widget name in kebab/dotted/or "separated in some way"
     // form a.b.c <=> d_e-f <=> g h i   , single identifiers will work if required
@@ -107,7 +107,7 @@ async function createWidget(args) {
 
     // console.log("Adding proxy to angular.json");
     // const angularJSON = JSON.parse(fs.readFileSync("angular.json"));
-    // angularJSON.projects[`${args.project}`].architect.serve["proxyConfig"] = "src/proxy.conf.json";
+    // angularJSON.projects[`${args.name}`].architect.serve["proxyConfig"] = "src/proxy.conf.json";
     // fs.writeFileSync("angular.json", JSON.stringify(angularJSON, null, 4));
 
 
@@ -197,7 +197,7 @@ async function createWidget(args) {
             rifOpts.from = /\_\_DASHEDNAME\_\_/g;
             rifOpts.to = dashedName;
             await rif(rifOpts);
-            console.log(`npm install base (local) ${args.project}`);
+            console.log(`npm install base (local) ${args.name}`);
             command = `npm install`;
             child = spawn(command, { encoding: 'utf8', shell: true });
             for await (const data of child.stdout) {
@@ -205,15 +205,15 @@ async function createWidget(args) {
             };
 
 
-            console.log(`npm install base (local/runtime) ${args.project}/runtime`);
+            console.log(`npm install base (local/runtime) ${args.name}/runtime`);
             process.chdir('runtime');
             command = `npm install`;
             child = spawn(command, { encoding: 'utf8', shell: true });
             for await (const data of child.stdout) {
                 console.log(`${data}`);
             };
-            //need for theruntime widget build not for the general dev
-            console.log(`npm adding dev dependencies (local/runtime) for ${args.project}`);
+            //need for the runtime widget build not for the general dev
+            console.log(`npm adding dev dependencies (local/runtime) for ${args.name}`);
             command = `npm install --save-dev @c8y/ngx-components@${cumulocity_version}`;
             child = spawn(command, { encoding: 'utf8', shell: true });
             for await (const data of child.stdout) {
