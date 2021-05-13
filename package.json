@@ -13,6 +13,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "@c8y/cli": "^1007.0.36",
         "make-case": "0.0.7",
         "recursive-copy": "^2.0.11",
         "replace-in-file": "^6.2.0",

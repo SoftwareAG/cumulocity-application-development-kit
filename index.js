@@ -28,9 +28,6 @@ yargs
                 demand: true,
                 choices: TEMPLATES,
             },
-            project: {
-                demand: true,
-            },
             name: {
                 demand: true,
             },
@@ -43,21 +40,22 @@ yargs
         },
     })
     //add elements to the widget
-    .command({
-        command: 'add [type] [names...]',
-        aliases: ['g'],
-        describe: 'Add dependencies or class ',
-        handler: addCommand,
-        builder: {
-            type: {
-                demand: true,
-                choices: ['dependency', 'class'],
-                default: 'dependency',
-            },
-            names: {
-                demand: true,
-                array: true,
-            },
-        },
-    }).parse(process.argv.slice(2)); //ignore the first two args
+    // .command({
+    //     command: 'add [type] [names...]',
+    //     aliases: ['g'],
+    //     describe: 'Add dependencies or class ',
+    //     handler: addCommand,
+    //     builder: {
+    //         type: {
+    //             demand: true,
+    //             choices: ['dependency', 'class'],
+    //             default: 'dependency',
+    //         },
+    //         names: {
+    //             demand: true,
+    //             array: true,
+    //         },
+    //     },
+    // })
+    .parse(process.argv.slice(2)); //ignore the first two args
 
