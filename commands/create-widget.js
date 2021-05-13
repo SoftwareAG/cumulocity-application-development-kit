@@ -9,19 +9,23 @@ async function createWidget(args) {
     console.log(args);
     // Create the workspace if it doesn't already exist. 
     if (fs.existsSync('angular.json')) {
-        print("You are already in an Angular project this command will create the whole project");
+        console.log("You are in an Angular project this command should be run in an empty directory.");
         return;
     }
 
     if (fs.existsSync(`${args.project}`)) {
-        print(`Cannot create project, ${args.project} already exists`);
+        console.log(`Cannot create project, ${args.project} already exists`);
         return;
     }
 
+    let cumulocity_version = args.ver ? `apps@${args.ver}` : "apps@latest";
+
+    console.log(`Using Cumulocity version ${cumulocity_version}`);
+
     //ng new Project-Name
     //cd Project - Name;
-    console.log(`Creating ${args.project}`);
-    let command = `c8ycli new ${args.project} cockpit -a @c8y/apps@latest `;
+    let command = `c8ycli new ${args.project} cockpit -a @c8y/${cumulocity_version} `;
+    console.log(`Creating ${args.project} - ${command}`);
     let child = spawn(command, { encoding: 'utf8', shell: true });
     for await (const data of child.stdout) {
         console.log(`${data}`);
@@ -72,10 +76,18 @@ async function createWidget(args) {
 
     console.log("modifying package.json");
     const packageJSON = JSON.parse(fs.readFileSync("package.json"));
-    packageJSON.scripts["c8y"]["application"]["name"] = "cockpit";
-    packageJSON.scripts["c8y"]["application"]["contextPath"] = "cockpit";
-    packageJSON.scripts["c8y"]["application"]["contextPath"] = "cockpit-application-key";
-    // packageJSON.scripts["buildMinor"] = `"cd projects/${dashedName}-widget && npm version minor && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
+    packageJSON.c8y.application.name = 'cockpit';
+    packageJSON.c8y.application.contextPath = 'cockpit';
+    packageJSON.c8y.application.key = 'cockpit-application-key';
+    // "tabsHorizontal": true,
+    //     "upgrade": true,
+    //         "rightDrawer": true,
+    //             "breadcrumbs": false,
+    //                 "sensorAppOneLink": "http://onelink.to/pca6qe",
+    //                     "sensorPhone": true,
+    //                         "contentSecurityPolicy": "base-uri 'none'; default-src 'self' 'unsafe-inline' http: https: ws: wss:; connect-src 'self' *.billwerk.com http: https: ws: wss:;  script-src 'self' open.mapquestapi.com *.twitter.com *.twimg.com 'unsafe-inline' 'unsafe-eval' data:; style-src * 'unsafe-inline' blob:; img-src * data:; font-src * data:; frame-src *;";
+
+    //packageJSON.scripts.buildRuntime = `gulp`;
     // packageJSON.scripts["buildMajor"] = `"cd projects/${dashedName}-widget && npm version major && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
     // packageJSON.scripts["serve"] = `"ng build ${dashedName}-widget && npm i dist/${dashedName}-widget && ng s"`;
     fs.writeFileSync("package.json", JSON.stringify(packageJSON, null, 4));
@@ -108,8 +120,8 @@ async function createWidget(args) {
             `app.module.ts`
         ],
         from: /import\ \{\ CoreModule/g,
-        to: `import { ${className}Widget } from './src/${dashedName}/${dashedName}-widget.component'
-        import { ${className}WidgetConfig } from './src/${dashedName}/${dashedName}-widget.config.component'
+        to: `import { ${className}Widget } from './src/${dashedName}-widget/${dashedName}-widget.component'
+        import { ${className}WidgetConfig } from './src/${dashedName}-widget/${dashedName}-widget.config.component'
         import { CoreModule, HOOK_COMPONENTS`,
     };
 
@@ -185,6 +197,28 @@ async function createWidget(args) {
             rifOpts.from = /\_\_DASHEDNAME\_\_/g;
             rifOpts.to = dashedName;
             await rif(rifOpts);
+            console.log(`npm install base (local) ${args.project}`);
+            command = `npm install`;
+            child = spawn(command, { encoding: 'utf8', shell: true });
+            for await (const data of child.stdout) {
+                console.log(`${data}`);
+            };
+
+
+            console.log(`npm install base (local/runtime) ${args.project}/runtime`);
+            process.chdir('runtime');
+            command = `npm install`;
+            child = spawn(command, { encoding: 'utf8', shell: true });
+            for await (const data of child.stdout) {
+                console.log(`${data}`);
+            };
+            //need for theruntime widget build not for the general dev
+            console.log(`npm adding dev dependencies (local/runtime) for ${args.project}`);
+            command = `npm install --save-dev @c8y/ngx-components@${cumulocity_version}`;
+            child = spawn(command, { encoding: 'utf8', shell: true });
+            for await (const data of child.stdout) {
+                console.log(`${data}`);
+            };
         }
         catch (error) {
             console.error('Error occurred:', error);
