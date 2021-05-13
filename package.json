@@ -7,10 +7,14 @@
         "gps-cli": "index.js"
     },
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"No Tests yet\" && exit 1"
     },
-    "keywords": [],
-    "author": "",
+    "keywords": [
+        "cumulocity",
+        "widget",
+        "cli"
+    ],
+    "author": "cariboujohn <jhshopping@heath.mx> (https://github.com/CaribouJohn/gps)",
     "license": "ISC",
     "dependencies": {
         "@c8y/cli": "^1007.0.36",
@@ -21,5 +25,9 @@
     },
     "devDependencies": {
         "@types/node": "^14.14.37"
-    }
+    },
+    "bugs": {
+        "url": "https://github.com/CaribouJohn/gpsissues"
+    },
+    "homepage": "https://github.com/CaribouJohn/gps"
 }
