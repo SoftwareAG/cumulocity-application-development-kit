@@ -27,7 +27,7 @@
         "@types/node": "^14.14.37"
     },
     "bugs": {
-        "url": "https://github.com/CaribouJohn/gpsissues"
+        "url": "https://github.com/CaribouJohn/gps/issues"
     },
     "homepage": "https://github.com/CaribouJohn/gps"
 }
