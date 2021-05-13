@@ -6,7 +6,7 @@ var rif = require('replace-in-file');
 const { spawn } = require('child_process');
 
 async function createWidget(args) {
-    console.log(args);
+    //console.log(args);
     // Create the workspace if it doesn't already exist. 
     if (fs.existsSync('angular.json')) {
         console.log("You are in an Angular project this command should be run in an empty directory.");
@@ -70,9 +70,9 @@ async function createWidget(args) {
 
 
     //debug
-    console.log("__CLASSNAME__ => " + className);
-    console.log("__DASHEDNAME__ => " + dashedName); // filenames and css classnames
-    console.log("__DOTTEDNAME__ => " + dottedName); // namespaces and config ids
+    //console.log("__CLASSNAME__ => " + className);
+    //console.log("__DASHEDNAME__ => " + dashedName); // filenames and css classnames
+    //console.log("__DOTTEDNAME__ => " + dottedName); // namespaces and config ids
 
     console.log("modifying package.json");
     const packageJSON = JSON.parse(fs.readFileSync("package.json"));
