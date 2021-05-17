@@ -182,7 +182,7 @@ async function createWidget(args) {
             //need for the runtime widget build not for the general dev
             console.log(`npm adding dev dependencies (runtime) for ${args.name}`);
             //command = `npm install --save-dev @c8y/ngx-components@${cumulocity_version}`;
-            command = `npm install --force --save-dev caniuse-lite gulp@4.0.2 gulp-filter@6.0.0 gulp-replace@1.0.0 gulp-zip@5.0.2 gulp-bump ng-packagr@9.1.1 url-loader@4.1.1 webpack@4.43.0 webpack-cli@3.3.11 webpack-external-import@2.2.3 css-loader@3.5.3`;
+            command = `npm install --force --save-exact --save-dev caniuse-lite gulp@4.0.2 gulp-filter@6.0.0 gulp-replace@1.0.0 gulp-zip@5.0.2 gulp-bump ng-packagr@9.1.1 url-loader@4.1.1 webpack@4.43.0 webpack-cli@3.3.11 webpack-external-import@2.2.3 css-loader@3.5.3`;
             child = spawn(command, { encoding: 'utf8', shell: true });
             for await (const data of child.stdout) {
                 console.log(`${data}`);
