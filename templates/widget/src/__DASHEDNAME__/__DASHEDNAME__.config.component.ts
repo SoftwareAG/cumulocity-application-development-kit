@@ -19,11 +19,11 @@ import { Component, Input, OnInit } from "@angular/core";
 import { ControlContainer, NgForm } from "@angular/forms";
 
 @Component({
-    selector: "__DASHEDNAME__-widget-config-component",
-    templateUrl: "./__DASHEDNAME__-widget.config.component.html",
+    selector: "__DASHEDNAME__-config-component",
+    templateUrl: "./__DASHEDNAME__.config.component.html",
     viewProviders: [{ provide: ControlContainer, useExisting: NgForm }],
 })
-export class __CLASSNAME__WidgetConfig implements OnInit {
+export class __CLASSNAME__Config implements OnInit {
     ngOnInit(): void {}
 
     @Input() config: any = {};

@@ -79,38 +79,13 @@ async function createWidget(args) {
     packageJSON.c8y.application.name = 'cockpit';
     packageJSON.c8y.application.contextPath = 'cockpit';
     packageJSON.c8y.application.key = 'cockpit-application-key';
-    // "tabsHorizontal": true,
-    //     "upgrade": true,
-    //         "rightDrawer": true,
-    //             "breadcrumbs": false,
-    //                 "sensorAppOneLink": "http://onelink.to/pca6qe",
-    //                     "sensorPhone": true,
-    //                         "contentSecurityPolicy": "base-uri 'none'; default-src 'self' 'unsafe-inline' http: https: ws: wss:; connect-src 'self' *.billwerk.com http: https: ws: wss:;  script-src 'self' open.mapquestapi.com *.twitter.com *.twimg.com 'unsafe-inline' 'unsafe-eval' data:; style-src * 'unsafe-inline' blob:; img-src * data:; font-src * data:; frame-src *;";
+    packageJSON['interleave'] = {};
+    packageJSON['interleave']["dist\\bundle-src\\custom-widget.js"] = `${dashedName}-CustomWidget`;
+    packageJSON['interleave']["dist/bundle-src/custom-widget.js"] = `${dashedName}-CustomWidget`;
+    packageJSON.scripts.buildRuntime = `gulp`;
 
-    //packageJSON.scripts.buildRuntime = `gulp`;
-    // packageJSON.scripts["buildMajor"] = `"cd projects/${dashedName}-widget && npm version major && ng build ${dashedName}-widget && cd ../../dist/${dashedName}-widget && npm pack && move *.tgz ../"`;
-    // packageJSON.scripts["serve"] = `"ng build ${dashedName}-widget && npm i dist/${dashedName}-widget && ng s"`;
+
     fs.writeFileSync("package.json", JSON.stringify(packageJSON, null, 4));
-
-    // console.log("creating proxy-conf.json");
-    // let tenant = args.tenant ? args.tenant : "http://your-tenant.cumulocity.com";
-    // const proxyJSON = {
-    //     "/": {
-    //         "target": tenant,
-    //         "secure": false,
-    //         "changeOrigin": true,
-    //         "logLevel": "info"
-    //     }
-    // };
-    // fs.writeFileSync("proxy-conf.json", JSON.stringify(proxyJSON, null, 4));
-
-
-    // console.log("Adding proxy to angular.json");
-    // const angularJSON = JSON.parse(fs.readFileSync("angular.json"));
-    // angularJSON.projects[`${args.name}`].architect.serve["proxyConfig"] = "src/proxy.conf.json";
-    // fs.writeFileSync("angular.json", JSON.stringify(angularJSON, null, 4));
-
-
 
     // I don't care about efficiency just the final result...
     // so multiple passes required for replace contents
@@ -120,8 +95,8 @@ async function createWidget(args) {
             `app.module.ts`
         ],
         from: /import\ \{\ CoreModule/g,
-        to: `import { ${className}Widget } from './src/${dashedName}-widget/${dashedName}-widget.component'
-        import { ${className}WidgetConfig } from './src/${dashedName}-widget/${dashedName}-widget.config.component'
+        to: `import { ${className}Widget } from './src/${dashedName}/${dashedName}.component'
+        import { ${className}WidgetConfig } from './src/${dashedName}/${dashedName}.config.component'
         import { CoreModule, HOOK_COMPONENTS`,
     };
 
@@ -204,17 +179,10 @@ async function createWidget(args) {
                 console.log(`${data}`);
             };
 
-
-            console.log(`npm install base (local/runtime) ${args.name}/runtime`);
-            process.chdir('runtime');
-            command = `npm install`;
-            child = spawn(command, { encoding: 'utf8', shell: true });
-            for await (const data of child.stdout) {
-                console.log(`${data}`);
-            };
             //need for the runtime widget build not for the general dev
-            console.log(`npm adding dev dependencies (local/runtime) for ${args.name}`);
-            command = `npm install --save-dev @c8y/ngx-components@${cumulocity_version}`;
+            console.log(`npm adding dev dependencies (runtime) for ${args.name}`);
+            //command = `npm install --save-dev @c8y/ngx-components@${cumulocity_version}`;
+            command = `npm install --save-dev caniuse-lite gulp@4.0.2 gulp-filter@6.0.0 gulp-replace@1.0.0 gulp-zip@5.0.2 gulp-bump ng-packagr@9.1.1 url-loader@4.1.1 webpack@4.43.0 webpack-cli@3.3.11 webpack-external-import@2.2.3 css-loader@3.5.3`;
             child = spawn(command, { encoding: 'utf8', shell: true });
             for await (const data of child.stdout) {
                 console.log(`${data}`);

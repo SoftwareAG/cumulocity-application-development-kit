@@ -22,11 +22,11 @@
 import { Component, Input, OnDestroy } from "@angular/core";
 import { Realtime, InventoryService } from "@c8y/client";
 @Component({
-    selector: "lib-__DASHEDNAME__-widget",
-    templateUrl: "./__DASHEDNAME__-widget.component.html",
-    styleUrls: ["./__DASHEDNAME__-widget.component.css"],
+    selector: "lib-__DASHEDNAME__",
+    templateUrl: "./__DASHEDNAME__.component.html",
+    styleUrls: ["./__DASHEDNAME__.component.css"],
 })
-export class __CLASSNAME__Widget implements OnDestroy {
+export class __CLASSNAME__ implements OnDestroy {
     widgetConfiguration: any;
 
     @Input() set config(newConfig: any) {

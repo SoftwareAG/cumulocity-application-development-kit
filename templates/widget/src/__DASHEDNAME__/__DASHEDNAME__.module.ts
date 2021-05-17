@@ -20,15 +20,15 @@
  */
 
 import { CoreModule, HOOK_COMPONENTS } from "@c8y/ngx-components";
-import { __CLASSNAME__WidgetConfig } from "./__DASHEDNAME__-widget.config.component";
-import { __CLASSNAME__Widget } from "./__DASHEDNAME__-widget.component";
+import { __CLASSNAME__Config } from "./__DASHEDNAME__.config.component";
+import { __CLASSNAME__ } from "./__DASHEDNAME__.component";
 import { NgModule } from "@angular/core";
 import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
     imports: [CoreModule, HttpClientModule],
-    declarations: [__CLASSNAME__Widget, __CLASSNAME__WidgetConfig],
-    entryComponents: [__CLASSNAME__Widget, __CLASSNAME__WidgetConfig],
+    declarations: [__CLASSNAME__, __CLASSNAME__Config],
+    entryComponents: [__CLASSNAME__, __CLASSNAME__Config],
     providers: [
         {
             provide: HOOK_COMPONENTS,
@@ -37,9 +37,9 @@ import { HttpClientModule } from "@angular/common/http";
                 id: "global.presales.__DOTTEDNAME__.widget",
                 label: "__CLASSNAME__",
                 description: "Description of __CLASSNAME__ widget",
-                component: __CLASSNAME__Widget,
-                configComponent: __CLASSNAME__WidgetConfig,
-                previewImage: require("~styles/previewImage.png"),
+                component: __CLASSNAME__,
+                configComponent: __CLASSNAME__Config,
+                previewImage: require("~assets/img-preview.png"),
                 data: {
                     ng1: {
                         options: { noDeviceTarget: false, noNewWidgets: false, deviceTargetNotRequired: false, groupsSelectable: true },
@@ -49,4 +49,4 @@ import { HttpClientModule } from "@angular/common/http";
         },
     ],
 })
-export class __CLASSNAME__WidgetModule {}
+export class __CLASSNAME__Module {}

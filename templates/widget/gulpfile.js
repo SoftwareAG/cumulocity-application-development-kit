@@ -60,7 +60,7 @@ const compileNoBump = series(
  */
 const bundle = series(
     async function webpackBuild() { return execSync("npx webpack", { stdio: 'inherit' }); },
-    function copyCumulocityJson() { return fs.copy('./cumulocity.json', './dist/widget/cumulocity.json'); },
+    function copyCumulocityJson() { return fs.copy('./widget-cumulocity.json', './dist/widget/cumulocity.json'); },
     function createZip() {
         const pkgJson = require('./dist/widget-library/package.json');//need bumped version.
         return src('./dist/widget/**/*')
@@ -73,7 +73,7 @@ const bundle = series(
 
 const bundleRelease = series(
     async function webpackBuild() { return execSync("npx webpack", { stdio: 'inherit' }); },
-    function copyCumulocityJson() { return fs.copy('./cumulocity.json', './dist/widget/cumulocity.json'); },
+    function copyCumulocityJson() { return fs.copy('./widget-cumulocity.json', './dist/widget/cumulocity.json'); },
     function createZip() {
         const pkgJson = require('./dist/widget-library/package.json');//need bumped version.
         return src('./dist/widget/**/*')

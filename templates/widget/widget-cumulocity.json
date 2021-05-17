@@ -1,6 +1,6 @@
 {
     "name": "__CLASSNAME__",
-    "contextPath": "__DASHEDNAME__-widget",
+    "contextPath": "__DASHEDNAME__",
     "key": "__DASHEDNAME__-application-key",
     "contentSecurityPolicy": "default-src 'self'",
     "description": "DESCRIPTION FOR __CLASSNAME__",
