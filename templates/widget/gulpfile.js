@@ -30,7 +30,16 @@ const compile = series(
             .pipe(bump())
             .pipe(dest('./'));
     },
-    function buildAngularLibrary() { return ngPackagr.build({ project: './ng-package.json' }); },
+    function buildAngularLibrary() {
+        return ngPackagr.ngPackagr()
+            .forProject('./ng-package.json')
+            .withTsConfig('./tsconfig.rt.json')
+            .build()
+            .catch(error => {
+                console.error(error);
+                process.exit(1);
+            });
+    },
     function separateWebpackBuildSrc() { return fs.copy('./dist/widget-library/fesm5', './dist/bundle-src'); },
     function replaceStylePath() {
         return src('./dist/widget-library/**/*')

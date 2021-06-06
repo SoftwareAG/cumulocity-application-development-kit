@@ -1,17 +1,27 @@
-<ng-form #configForm="ngForm">
-
-    <c8y-form-group>
+<div>
+    <div class="configSection">
         <label for="__CLASSNAME__Config">
             __CLASSNAME__Config Configuration
         </label>
-    </c8y-form-group>
 
-    <c8y-form-group>
-        <label for="__CLASSNAME__-myValue">
-            Simple Value
-        </label>
-        <input type="text" name="__CLASSNAME__-myValue" id="__CLASSNAME__-myValue" class="form-control bar-chart-control"
-            (change)="onConfigChanged($event)" [(ngModel)]="config.myValue" placeholder='val' />
-    </c8y-form-group>
+        <div class="row form-group">
 
-</ng-form>
+            <div class="col-lg-12 col-layout">
+                <div class="input-group mb-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text help-icon" id="basic-addon1">
+                            Simple Value
+                            <img src="{{CONST_HELP_IMAGE_FILE}}" alt="help tooltip"
+                                 title="Enter a simple value to display on the widget.">
+
+                        </span>
+                    </div>
+                    <input type="text" name="__CLASSNAME__-myValue" id="__CLASSNAME__-myValue"
+                           class="form-control"
+                           (change)="onConfigChanged()" [(ngModel)]="widgetHelper.getWidgetConfig().myValue"
+                           placeholder='val' />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

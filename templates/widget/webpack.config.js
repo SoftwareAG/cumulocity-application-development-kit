@@ -10,7 +10,7 @@ module.exports = {
     resolve: {
         alias: {
             "~styles": path.resolve(__dirname, 'styles'),
-            "~assets": path.resolve(__dirname, 'assets')
+            "@widget-assets": path.resolve(__dirname, 'src/__DASHEDNAME__/assets'),
         }
     },
     module: {

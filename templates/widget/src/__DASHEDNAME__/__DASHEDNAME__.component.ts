@@ -19,21 +19,31 @@
  * @format
  */
 
-import { Component, Input, OnDestroy } from "@angular/core";
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Realtime, InventoryService } from "@c8y/client";
+import { WidgetHelper } from "./widget-helper";
+import { WidgetConfig } from "./widget-config";
+
 @Component({
     selector: "lib-__DASHEDNAME__",
     templateUrl: "./__DASHEDNAME__.component.html",
     styleUrls: ["./__DASHEDNAME__.component.css"],
 })
-export class __CLASSNAME__ implements OnDestroy {
-    widgetConfiguration: any;
+export class __CLASSNAME__ implements OnDestroy, OnInit {
 
-    @Input() set config(newConfig: any) {
-        this.widgetConfiguration = newConfig;
+    widgetHelper: WidgetHelper<WidgetConfig>;
+    @Input() config;
+
+
+    constructor(private realtime: Realtime, private invSvc: InventoryService) {
     }
 
-    constructor(private realtime: Realtime, private invSvc: InventoryService) {}
+    async ngOnInit(): Promise<void> {
+        this.widgetHelper = new WidgetHelper(this.config, WidgetConfig); //default access through here
+        return;
+    }
 
-    ngOnDestroy(): void {}
+    ngOnDestroy(): void {
+        //unsubscribe from observables here
+    }
 }

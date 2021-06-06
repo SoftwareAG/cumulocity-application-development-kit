@@ -2,7 +2,7 @@
     "$schema": "./node_modules/ng-packagr/ng-package.schema.json",
     "assets": [
         "./styles/**/*",
-        "./assets/**/*"
+        "./src/*/assets/**/*"
     ],
     "lib": {
         "entryFile": "./src/public_api.ts",

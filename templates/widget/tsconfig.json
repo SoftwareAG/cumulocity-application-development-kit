@@ -1,6 +1,12 @@
 {
     "compileOnSave": false,
     "compilerOptions": {
+        "paths": {
+            "@widget-assets/*": [
+                "./src/__DASHEDNAME__/assets/*",
+                "./dist/widget-library/src/__DASHEDNAME__/assets"
+            ]
+        },
         "baseUrl": "./",
         "outDir": "./dist/out-tsc",
         "sourceMap": true,

@@ -40,7 +40,7 @@ import { __CLASSNAME__ } from "./src/__DASHEDNAME__/__DASHEDNAME__.component";
                     description: "Description of __CLASSNAME__ widget",
                     component: __CLASSNAME__,
                     configComponent: __CLASSNAME__Config,
-                    previewImage: require("./assets/img-preview.png"),
+                    previewImage: require("@widget-assets/img-preview.png"),
                     data: {
                         ng1: {
                             options: {
