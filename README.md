@@ -66,11 +66,12 @@ cadk create widget --name my-cool-widget
 
 ### create widget
 
+_N.B. this command can take several minutes to finish depending on your machine and internet connection_
 ```
     npx cadk create widget --name <name> [--version <c8ysdk-version>]
 ```
 
-![Charts](/images/npxcadk.gif)
+![create widget](/images/npxcadk.gif)
 
 
 The ```--name``` parameter is __required__, and __should be entered as a dashed name__ because internally it uses this to produce Class and package names using the separator. 
@@ -84,8 +85,8 @@ The ```--name``` parameter is __required__, and __should be entered as a dashed 
   
 ```
 
-The ```--version``` parameter is optional, if omitted ``` @c8y/apps@latest``` is used
+The ```--version``` parameter is optional and for 99% of users it should be ignored.When omitted ``` @c8y/apps@latest``` is used to drive the ```c8ycli new cockpit``` command that is run as part of create widget. 
 
-The format of this should be in the form ``` --version 1006.6.31``` . 
+If used, the version supplied should be in the form ``` --version 1006.6.31``` as it replaces the ```latest```. 
 
 
