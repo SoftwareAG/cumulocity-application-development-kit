@@ -14,7 +14,7 @@
         "widget",
         "cli"
     ],
-    "author": "cariboujohn <jhshopping@heath.mx> (https://github.com/CaribouJohn/gps)",
+    "author": "cariboujohn <john.heath@softwareag.com> (https://github.com/SoftwareAG/cumulocity-global-presales-cli)",
     "license": "ISC",
     "dependencies": {
         "@c8y/cli": "^1007.0.36",
@@ -27,7 +27,7 @@
         "@types/node": "^14.14.37"
     },
     "bugs": {
-        "url": "https://github.com/CaribouJohn/gps/issues"
+        "url": "https://github.com/SoftwareAG/cumulocity-global-presales-cli/issues"
     },
-    "homepage": "https://github.com/CaribouJohn/gps"
+    "homepage": "https://github.com/SoftwareAG/cumulocity-global-presales-cli"
 }
