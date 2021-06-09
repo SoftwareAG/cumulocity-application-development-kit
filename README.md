@@ -64,7 +64,16 @@ cadk create widget --name my-cool-widget
 
 ## Usage
 
-The ```--name``` parameter is required, and should be entered as a dashed name because internally it uses this to produce Class and package names using the separator. 
+### create widget
+
+```
+    npx cadk create widget --name <name> [--version <c8ysdk-version>]
+```
+
+![Charts](/images/npxcadk.gif)
+
+
+The ```--name``` parameter is __required__, and __should be entered as a dashed name__ because internally it uses this to produce Class and package names using the separator. 
 
 ```
   #--name my-cool-package produces the following names in the output
@@ -74,5 +83,9 @@ The ```--name``` parameter is required, and should be entered as a dashed name b
   my.cool.package
   
 ```
+
+The ```--version``` parameter is optional, if omitted ``` @c8y/apps@latest``` is used
+
+The format of this should be in the form ``` --version 1006.6.31``` . 
 
 
