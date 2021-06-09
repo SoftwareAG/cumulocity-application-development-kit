@@ -16,7 +16,7 @@ const TEMPLATES = fs.readdirSync(path.join(__dirname, 'templates'));
 // manner - pass that to a handler defined in the command sub dir
 //
 yargs
-    .scriptName('gps-cli')
+    .scriptName('cadk')
     //create the component skeleton
     .command({
         command: 'create [type] [name]',
