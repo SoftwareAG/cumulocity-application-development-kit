@@ -50,6 +50,8 @@ npm i cumulocity-adk
 npx cadk create widget --name my-cool-widget
 
 ```
+![Charts](/images/npminstall.gif)
+
 
 * Install globally (like any application) to make the command line tool available on the path (use in any directory)
 
@@ -58,6 +60,7 @@ npm install -g cumulocity-adk
 cadk create widget --name my-cool-widget
 
 ```
+![Charts](/images/npxrun.gif)
 
 ## Usage
 
