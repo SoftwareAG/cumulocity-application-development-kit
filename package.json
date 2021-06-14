@@ -1,6 +1,6 @@
 {
     "name": "cumulocity-adk",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Global Presales command line",
     "main": "index.js",
     "bin": {

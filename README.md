@@ -89,6 +89,12 @@ The ```--version``` parameter is optional and for 99% of users it should be igno
 
 If used, the version supplied should be in the form ``` --version 1006.6.31``` as it replaces the ```latest```. 
 
+## ChangeLog
+
+* v1.2.1 - added support for vscode extension and removed npm installs.  This provides a quicker process and control over when the install happens. 
+    * added ```--destination``` to allow for the command line to create assets in a specified directory. [optional] - defaults to current directory. 
+    * added export to allow create widget command to be run from code, made async.
+
 ______________________
 These tools are provided as-is and without warranty or support. They do not constitute part of the Software AG product suite. Users are free to use, fork and modify them, subject to the license agreement. While Software AG welcomes contributions, we cannot guarantee to include every contribution in the master project.
 
