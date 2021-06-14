@@ -6,14 +6,23 @@ var rif = require('replace-in-file');
 const { spawn } = require('child_process');
 
 async function createWidget(args) {
-    //console.log(args);
+
+    let destination = process.cwd();
+
+    //assume cli, if not we MUST have certain elements set.
+    if (args.destination !== undefined) {
+        destination = args.destination;
+    }
+
+    console.log("DESTINATION: ", destination);
+
     // Create the workspace if it doesn't already exist. 
-    if (fs.existsSync('angular.json')) {
+    if (fs.existsSync(`${destination}/angular.json`)) {
         console.log("You are in an Angular project this command should be run in an empty directory.");
         return;
     }
 
-    if (fs.existsSync(`${args.name}`)) {
+    if (fs.existsSync(`${destination}/${args.name}`)) {
         console.log(`Cannot create project, ${args.name} already exists`);
         return;
     }
@@ -26,14 +35,14 @@ async function createWidget(args) {
     //cd Project - Name;
     let command = `npx @c8y/cli new ${args.name} cockpit -a @c8y/${cumulocity_version} `;
     console.log(`Creating ${args.name} - ${command}`);
-    let child = spawn(command, { encoding: 'utf8', shell: true });
+    let child = spawn(command, { encoding: 'utf8', shell: true, cwd: destination });
     for await (const data of child.stdout) {
         console.log(`${data}`);
     };
 
 
-    console.log("Changing to project directory");
-    process.chdir(args.name);
+    console.log("Transforming widget");
+    //process.chdir(args.name);
 
     // EXPECT widget name in kebab/dotted/or "separated in some way"
     // form a.b.c <=> d_e-f <=> g h i   , single identifiers will work if required
@@ -74,25 +83,28 @@ async function createWidget(args) {
     //console.log("__DASHEDNAME__ => " + dashedName); // filenames and css classnames
     //console.log("__DOTTEDNAME__ => " + dottedName); // namespaces and config ids
 
-    console.log("modifying package.json");
-    const packageJSON = JSON.parse(fs.readFileSync("package.json"));
-    packageJSON.c8y.application.name = 'cockpit';
-    packageJSON.c8y.application.contextPath = 'cockpit';
-    packageJSON.c8y.application.key = 'cockpit-application-key';
-    packageJSON['interleave'] = {};
-    packageJSON['interleave']["dist\\bundle-src\\custom-widget.js"] = `${dashedName}-CustomWidget`;
-    packageJSON['interleave']["dist/bundle-src/custom-widget.js"] = `${dashedName}-CustomWidget`;
-    packageJSON.scripts.buildRuntime = `gulp`;
-
-
-    fs.writeFileSync("package.json", JSON.stringify(packageJSON, null, 4));
+    let pkgFile = `${destination}/${args.name}/package.json`;
+    try {
+        console.log(`Modifying ${pkgFile}`);
+        const packageJSON = JSON.parse(fs.readFileSync(pkgFile));
+        packageJSON.c8y.application.name = 'cockpit';
+        packageJSON.c8y.application.contextPath = 'cockpit';
+        packageJSON.c8y.application.key = 'cockpit-application-key';
+        packageJSON['interleave'] = {};
+        packageJSON['interleave']["dist\\bundle-src\\custom-widget.js"] = `${dashedName}-CustomWidget`;
+        packageJSON['interleave']["dist/bundle-src/custom-widget.js"] = `${dashedName}-CustomWidget`;
+        packageJSON.scripts.buildRuntime = `gulp`;
+        fs.writeFileSync(pkgFile, JSON.stringify(packageJSON, null, 4));
+    } catch (err) {
+        console.error(err);
+    }
 
     // I don't care about efficiency just the final result...
     // so multiple passes required for replace contents
     //Now update replacements in the destination files 
     const fetchOpts = {
         files: [
-            `app.module.ts`
+            `${destination}/${args.name}/app.module.ts`
         ],
         from: /import\ \{\ CoreModule/g,
         to: `import { ${className}Widget } from './src/${dashedName}/${dashedName}.component'
@@ -152,18 +164,17 @@ async function createWidget(args) {
         // I don't care about efficiency just the final result... 
         // so multiple passes required for replace contents
         //Now update replacements in the destination files 
-        let destination = process.cwd();
         const rifOpts = {
             files: [
-                `*`,
-                `**`
+                `${destination}/${args.name}/*`,
+                `${destination}/${args.name}/**`
             ],
             from: /\_\_CLASSNAME\_\_/g,
             to: className,
         };
 
         try {
-            const copyRes = await copy(path.join(__dirname, '..', 'templates', args.type), destination, options);
+            const copyRes = await copy(path.join(__dirname, '..', 'templates', args.type), `${destination}/${args.name}`, options);
             console.info('Copied ' + copyRes.length + ' files');
             await rif(rifOpts);
             rifOpts.from = /\_\_DOTTEDNAME\_\_/g;
@@ -174,7 +185,7 @@ async function createWidget(args) {
             await rif(rifOpts);
             console.log(`npm install base (local) ${args.name}`);
             command = `npm install`;
-            child = spawn(command, { encoding: 'utf8', shell: true });
+            child = spawn(command, { encoding: 'utf8', shell: true, cwd: `${destination}/${args.name}/` });
             for await (const data of child.stdout) {
                 console.log(`${data}`);
             };
@@ -183,7 +194,7 @@ async function createWidget(args) {
             console.log(`npm adding dev dependencies (runtime) for ${args.name}`);
             //command = `npm install --save-dev @c8y/ngx-components@${cumulocity_version}`;
             command = `npm install --force --save-exact --save-dev caniuse-lite gulp@4.0.2 gulp-filter@6.0.0 gulp-replace@1.0.0 gulp-zip@5.0.2 gulp-bump ng-packagr@9.1.1 url-loader@4.1.1 webpack@4.43.0 webpack-cli@3.3.11 webpack-external-import@2.2.3 css-loader@3.5.3`;
-            child = spawn(command, { encoding: 'utf8', shell: true });
+            child = spawn(command, { encoding: 'utf8', shell: true, cwd: `${destination}/${args.name}/` });
             for await (const data of child.stdout) {
                 console.log(`${data}`);
             };

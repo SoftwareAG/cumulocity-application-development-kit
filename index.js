@@ -31,6 +31,9 @@ yargs
             name: {
                 demand: true,
             },
+            destination: {
+                demand: false,
+            },
             tenant: {
                 demand: false,
             },
@@ -59,3 +62,4 @@ yargs
     // })
     .parse(process.argv.slice(2)); //ignore the first two args
 
+exports.createWidget = createWidget;
