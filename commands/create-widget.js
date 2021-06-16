@@ -112,52 +112,6 @@ async function createWidget(args) {
         return;
     }
 
-    // I don't care about efficiency just the final result...
-    // so multiple passes required for replace contents
-    //Now update replacements in the destination files 
-    // console.log(`Adding elements to ${destination}/${args.name}/app.module.ts`);
-    // const fetchOpts = {
-    //     files: [
-    //         `${destination}/${args.name}/app.module.ts`
-    //     ],
-    //     from: /import\ \{\ CoreModule/g,
-    //     to: `import { ${className}Widget } from './src/${dashedName}/${dashedName}.component'
-    //     import { ${className}WidgetConfig } from './src/${dashedName}/${dashedName}.config.component'
-    //     import { CoreModule, HOOK_COMPONENTS`,
-    // };
-
-    // await rif(fetchOpts);
-
-    // fetchOpts.from = /imports\:\ \[/g;
-    // fetchOpts.to = `  declarations: [${className}Widget, ${className}WidgetConfig],      // 1.
-    //     entryComponents: [${className}Widget, ${className}WidgetConfig],
-    //     providers: [{
-    //         provide: HOOK_COMPONENTS,                         // 2.
-    //         multi: true,
-    //         useValue: [
-    //             {
-    //                 id: 'global.presales.${dottedName}.widget',
-    //                 label: '${className} Widget',
-    //                 description: '${className} Widget',
-    //                 //previewImage: preview.previewImage,
-    //                 component: ${className}Widget,
-    //                 configComponent: ${className}WidgetConfig,
-    //                 data : {
-    //                     ng1 : {
-    //                         options: { noDeviceTarget: false,
-    //                         noNewWidgets: false,
-    //                         deviceTargetNotRequired: false,
-    //                         groupsSelectable: true
-    //                         },
-    //                     }
-    //                 }
-    //             }
-    //         ]
-    //     }],
-    //     imports: [`;
-
-
-    // await rif(fetchOpts);
 
     // Use the above to generate the files for the new widget
     // args contains the type of thing we are using (the template dir)
@@ -197,21 +151,10 @@ async function createWidget(args) {
         rifOpts.from = /\_\_DASHEDNAME\_\_/g;
         rifOpts.to = dashedName;
         await rif(rifOpts);
-        // console.log(`npm install base (local) ${args.name}`);
-        // command = `npm install`;
-        // child = spawn(command, { encoding: 'utf8', shell: true, cwd: `${destination}/${args.name}/` });
-        // for await (const data of child.stdout) {
-        //     console.log(`${data}`);
-        // };
 
-        //need for the runtime widget build not for the general dev
-        // console.log(`npm adding dev dependencies (runtime) for ${args.name}`);
-        // //command = `npm install --save-dev @c8y/ngx-components@${cumulocity_version}`;
-        // command = `npm install --force --save-exact --save-dev caniuse-lite gulp@4.0.2 gulp-filter@6.0.0 gulp-replace@1.0.0 gulp-zip@5.0.2 gulp-bump ng-packagr@9.1.1 url-loader@4.1.1 webpack@4.43.0 webpack-cli@3.3.11 webpack-external-import@2.2.3 css-loader@3.5.3`;
-        // child = spawn(command, { encoding: 'utf8', shell: true, cwd: `${destination}/${args.name}/` });
-        // for await (const data of child.stdout) {
-        //     console.log(`${data}`);
-        // };
+        //rename webpack after - publish removes the file if we don't make it something else
+        fs.rename(`${destination}/${args.name}/webpack.config.js.tmpl`, `${destination}/${args.name}/webpack.config.js`, (err) => err ? console.log(err) : console.log("renamed"));
+
     }
     catch (error) {
         console.error('Error occurred:', error);
