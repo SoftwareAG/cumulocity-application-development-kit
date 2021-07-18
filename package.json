@@ -1,13 +1,13 @@
 {
     "name": "cumulocity-adk",
-    "version": "1.2.2",
+    "version": "1.2.4",
     "description": "Global Presales command line",
     "main": "index.js",
     "bin": {
         "cadk": "index.js"
     },
     "scripts": {
-        "test": "echo \"No Tests yet\" && exit 1"
+        "publish": "npm publish"
     },
     "keywords": [
         "cumulocity",

@@ -104,7 +104,8 @@ async function createWidget(args) {
         packageJSON['devDependencies']["webpack"] = "4.43.0";
         packageJSON['devDependencies']["webpack-cli"] = "3.3.11";
         packageJSON['devDependencies']["webpack-external-import"] = "2.2.3";
-        packageJSON.scripts.buildRuntime = `gulp`;
+        packageJSON.scripts["buildRuntime"] = `gulp`;
+        packageJSON.scripts["dev-install"] = `npm install --force --development`;
         fs.writeFileSync(pkgFile, JSON.stringify(packageJSON, null, 4));
     } catch (err) {
         console.log(`Modifying ${pkgFile}, FAILED`);
