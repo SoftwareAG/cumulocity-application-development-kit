@@ -4,6 +4,10 @@
 <sub><sup>Developed by Global Presales (Software AG)</sup></sub>
 
 ## Introduction
+
+> TLDR; the easiest way to use this tool is via the vscode extension ```cumulocity-helper``` which can be found [here](https://marketplace.visualstudio.com/items?itemName=JohnHeath.cumulocity-helper)
+
+
 Our goal in Software AG - Global Presales is to facilitate the sales process by providing accelerators to aid in the production of demos and sales assets. 
 
 The goal of this tool is to remove some of the overhead when starting new cumulocity projects. There are many common tasks and I believe that a lot of them can be automated. By generating the boilerplate we allow the user to jump straight in with creating content. 
