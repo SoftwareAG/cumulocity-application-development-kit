@@ -1,4 +1,8 @@
 # Software AG - Cumulocity Application Development Kit
+<img src="images/gps.png" alt="drawing" width="200"/>
+
+<sub><sup>Developed by Global Presales (Software AG)</sup></sub>
+
 ## Introduction
 Our goal in Software AG - Global Presales is to facilitate the sales process by providing accelerators to aid in the production of demos and sales assets. 
 
